@@ -17,6 +17,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 
@@ -97,5 +99,54 @@ public class BeerServiceTests {
 
         //Then
         assertThrows(BeerNotFoundException.class, () -> beerService.findByName(expectedFoundBeerDTO.getName()));
+    }
+
+    @Test
+    void whenListBeerIsCalledThenReturnAListOfBeers() {
+        //Given
+        BeerDTO expectedFoundBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        Beer expectedFoundBeer = beerMapper.toModel(expectedFoundBeerDTO);
+
+        //When
+        when(beerRepository.findAll()).thenReturn(Collections.singletonList(expectedFoundBeer));
+
+        //Then
+        List<BeerDTO> foundListBeerDTO = beerService.listAll();
+
+        assertThat(foundListBeerDTO, is(not(empty())));
+        assertThat(foundListBeerDTO.get(0), is(equalTo(expectedFoundBeerDTO)));
+
+
+    }
+
+    @Test
+    void whenListBeerIsCalledThenReturnAnEmptyListOfBeers() {
+        //When
+        when(beerRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
+
+        //Then
+        List<BeerDTO> foundListBeerDTO = beerService.listAll();
+
+        assertThat(foundListBeerDTO, is(empty()));
+
+
+    }
+
+    @Test
+    void whenExclusionIsCalledWithValidIdThenBeerShouldBeDeleted() throws BeerNotFoundException {
+        //Given
+        BeerDTO expectedDeleteBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        Beer expectedDeleteBeer = beerMapper.toModel(expectedDeleteBeerDTO);
+
+        //When
+        when(beerRepository.findById(expectedDeleteBeerDTO.getId())).thenReturn(Optional.of(expectedDeleteBeer));
+        doNothing().when(beerRepository).deleteById(expectedDeleteBeerDTO.getId());
+
+        //Then
+        beerService.deleteById(expectedDeleteBeerDTO.getId());
+
+        verify(beerRepository, times(1)).findById(expectedDeleteBeerDTO.getId());
+        verify(beerRepository, times(1)).deleteById(expectedDeleteBeerDTO.getId());
+
     }
 }
