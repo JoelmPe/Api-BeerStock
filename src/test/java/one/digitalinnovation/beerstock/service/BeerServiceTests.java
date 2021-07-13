@@ -1,13 +1,13 @@
 package one.digitalinnovation.beerstock.service;
 
 import one.digitalinnovation.beerstock.builder.BeerDTO;
+import one.digitalinnovation.beerstock.builder.BeerDTOBuilder;
 import one.digitalinnovation.beerstock.entity.Beer;
 import one.digitalinnovation.beerstock.exception.BeerAlreadyRegisteredException;
 import one.digitalinnovation.beerstock.exception.BeerNotFoundException;
 import one.digitalinnovation.beerstock.exception.BeerStockExceededException;
 import one.digitalinnovation.beerstock.mapper.BeerMapper;
 import one.digitalinnovation.beerstock.repository.BeerRepository;
-import one.digitalinnovation.beerstock.builder.BeerDTOBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,15 +18,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BeerServiceTests {
 
-    private static final long INVALID_BEER_ID= 1L;
+    private static final long INVALID_BEER_ID = 1L;
 
     @Mock
     private BeerRepository beerRepository;
@@ -47,7 +47,7 @@ public class BeerServiceTests {
         when(beerRepository.save(expectedSavedBeer)).thenReturn(expectedSavedBeer);
 
         //Then
-        BeerDTO createdBeerDTO= beerService.createBeer(expectedBeerDTO);
+        BeerDTO createdBeerDTO = beerService.createBeer(expectedBeerDTO);
 
         assertThat(createdBeerDTO.getId(), is(equalTo(expectedBeerDTO.getId())));
         assertThat(createdBeerDTO.getName(), is(equalTo(expectedBeerDTO.getName())));

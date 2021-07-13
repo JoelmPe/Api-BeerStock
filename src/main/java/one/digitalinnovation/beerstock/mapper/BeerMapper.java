@@ -1,4 +1,5 @@
 package one.digitalinnovation.beerstock.mapper;
+
 import one.digitalinnovation.beerstock.builder.BeerDTO;
 import one.digitalinnovation.beerstock.entity.Beer;
 import org.mapstruct.Mapper;

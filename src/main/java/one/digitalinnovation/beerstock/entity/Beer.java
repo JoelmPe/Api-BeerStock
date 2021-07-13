@@ -2,9 +2,7 @@ package one.digitalinnovation.beerstock.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import one.digitalinnovation.beerstock.enums.BeerType;
 
 import javax.persistence.*;
@@ -23,7 +21,7 @@ public class Beer {
     private String name;
 
     @Column(nullable = false)
-    private  String brand;
+    private String brand;
 
     @Column(nullable = false)
     private int max;
