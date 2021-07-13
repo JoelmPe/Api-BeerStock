@@ -1,7 +1,6 @@
-package one.digitalinnovation.beerstock.service.builder;
+package one.digitalinnovation.beerstock.builder;
 
 import lombok.Builder;
-import one.digitalinnovation.beerstock.builder.BeerDTO;
 import one.digitalinnovation.beerstock.enums.BeerType;
 
 @Builder
